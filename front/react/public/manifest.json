@@ -1,0 +1,13 @@
+{
+  "name": "React extension",
+  "version": "1.0",
+  "description": "Test project",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "topSites",
+    "chrome://favicon/"
+  ],
+  "manifest_version": 2
+}
