@@ -6,9 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { SuggestionsService } from './services/suggestions.service';
 
 // const suggestions = new SuggestionsMock();
-const suggestions = new SuggestionsService();
+const suggestionsService = new SuggestionsService();
 
-ReactDOM.render(<App suggestions={suggestions} />, document.getElementById('root'));
+ReactDOM.render(<App suggestionsService={suggestionsService} />, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change

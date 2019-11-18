@@ -5,7 +5,7 @@ import { Suggestions } from './services/suggestions.interface';
 import { Subscription } from 'rxjs';
 
 interface AppProps {
-  suggestions: Suggestions;
+  suggestionsService: Suggestions;
 }
 
 interface AppState {
@@ -23,8 +23,8 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   async componentDidMount() {
-    this.sub$ = this.props.suggestions.data$.subscribe(listSuggestions => this.setState({ listSuggestions }));
-    this.props.suggestions.next('foo');
+    this.sub$ = this.props.suggestionsService.data$.subscribe(listSuggestions => this.setState({ listSuggestions }));
+    this.props.suggestionsService.next('foo');
   }
   async componentWillUnmount() {
     if (this.sub$) this.sub$.unsubscribe();

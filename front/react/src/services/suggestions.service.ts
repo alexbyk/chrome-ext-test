@@ -5,7 +5,7 @@ import { fromFetch } from 'rxjs/fetch';
 
 /** Service that fetches a data and emits results */
 export class SuggestionsService implements Suggestions {
-  private url = 'http://localhost:3000/';
+  private url = 'http://localhost:8080/';
 
   private input$ = new Subject<string>();
 
