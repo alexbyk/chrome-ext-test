@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { SuggestionsService } from './services/suggestions.service';
 import { TopService } from './services/top.service';
+import { TopMock } from './services/top.mock';
 
 const suggestionsService = new SuggestionsService();
 const topService = new TopService();

@@ -5,7 +5,7 @@ import { Suggestions } from './services/suggestions.interface';
 import { Subscription } from 'rxjs';
 import Form from './components/form';
 import { Top, TopItem } from './services/top.interface';
-import { timingSafeEqual } from 'crypto';
+import TopList from './components/top';
 
 interface AppProps {
   suggestionsService: Suggestions;
@@ -25,10 +25,6 @@ class App extends React.Component<AppProps, AppState> {
   subs: Subscription[] = [];
 
   readonly redirectUrl = 'https://www.bing.com/search';
-
-  renderSites() {
-    return this.state.top.map((v, i) => <div key={i}>{v.title}</div>);
-  }
 
   async componentDidMount() {
 
@@ -54,12 +50,13 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
+    const { top, value, suggestions } = this.state;
     return (
       <>
         <div className="App" >
-          <Form {...this.state} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
+          <Form value={value} suggestions={suggestions} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
         </div>
-        {this.renderSites()}
+        <TopList items={top}></TopList>
       </>
     );
   }
