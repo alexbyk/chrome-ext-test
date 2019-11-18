@@ -28,5 +28,4 @@ export class Client {
     return json[1];
   }
 
-
 }
