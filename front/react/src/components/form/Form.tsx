@@ -9,8 +9,10 @@ export interface FormProps extends InputProps {
 const Form: React.FC<FormProps> = (props) => {
   return (
     <form onSubmit={e => { e.preventDefault(); props.onSubmit(); }}>
-      <Input suggestions={props.suggestions} onChange={v => { props.onChange(v) }} value={props.value}></Input>
-      <button disabled={!props.value}>Submit</button>
+      <div>
+        <Input suggestions={props.suggestions} onChange={v => { props.onChange(v) }} value={props.value}></Input>
+        <button disabled={!props.value}>Submit</button>
+      </div>
     </form>
   );
 }

@@ -5,12 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { SuggestionsService } from './services/suggestions.service';
 import { TopService } from './services/top.service';
-import { TopMock } from './services/top.mock';
 
 const suggestionsService = new SuggestionsService();
 const topService = new TopService();
 
-ReactDOM.render(<App topService={topService} suggestionsService={suggestionsService} />, document.getElementById('root'));
+ReactDOM.render(
+  <div className="container">
+    <App topService={topService} suggestionsService={suggestionsService} />
+  </div>, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change

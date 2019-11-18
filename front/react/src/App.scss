@@ -1,0 +1,58 @@
+.App {
+  max-width: 800px;
+}
+
+.Suggestions {
+  padding: 20px;
+  form {
+    width: 100%;
+  }
+  div {
+    display: flex;
+    input {
+      flex: 1;
+      margin-right: 10px;
+    }
+  }
+
+
+}
+.Top {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    a:hover {
+      background-color: lightblue;
+    }
+    a {
+      span {
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+      }
+      width: 26%;
+      margin: 10px;
+      padding: 10px;
+      img {
+        width: 16px;
+        height: 16px;
+        margin-bottom: 6px;
+      }
+      display: flex;
+      flex-flow: column;
+    }
+  }
+}
+
+input, button {
+  font-size: 18px;
+}
+
+.Green {
+  border: 3px solid gray;
+}
+
+

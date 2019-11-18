@@ -1,6 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import { Suggestions } from './services/suggestions.interface';
 import { Subscription } from 'rxjs';
 import Form from './components/form';
@@ -54,9 +53,13 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <>
         <div className="App" >
-          <Form value={value} suggestions={suggestions} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
+          <div className="Suggestions" >
+            <Form value={value} suggestions={suggestions} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
+          </div>
+          <div className="Top" >
+            <TopList items={top}></TopList>
+          </div>
         </div>
-        <TopList items={top}></TopList>
       </>
     );
   }
