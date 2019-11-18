@@ -23,6 +23,7 @@ Build an extension
 
     cd ../front
     npm ci
+    npm run build
 
 Load an unpacked extension in development mode under the `build` folder
 
