@@ -1,6 +1,6 @@
 import { Suggestions } from "./suggestions.interface";
 import { Subject, Observable, of, throwError } from 'rxjs';
-import { switchMap, catchError, map } from 'rxjs/operators';
+import { switchMap, catchError, map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromFetch } from 'rxjs/fetch';
 
 /** Service that fetches a data and emits results */
@@ -21,6 +21,8 @@ export class SuggestionsService implements Suggestions {
   }
 
   data$: Observable<string[]> = this.input$.pipe(
+    debounceTime(300), // timeout 300ms
+    distinctUntilChanged(), // don't repeat
     switchMap(key => this.fetch(key)),
     map((data: { list: string[] }) => data['list']),
     catchError(err => {
