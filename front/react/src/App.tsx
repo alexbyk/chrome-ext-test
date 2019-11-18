@@ -4,32 +4,41 @@ import './App.css';
 import { Suggestions } from './services/suggestions.interface';
 import { Subscription } from 'rxjs';
 import Form from './components/form';
+import { Top, TopItem } from './services/top.interface';
+import { timingSafeEqual } from 'crypto';
 
 interface AppProps {
   suggestionsService: Suggestions;
+  topService: Top;
 }
 
 interface AppState {
   value: string;
+  top: TopItem[];
   suggestions: string[]; // list of suggestions
 }
 
 class App extends React.Component<AppProps, AppState> {
-  state: AppState = { value: '', suggestions: [] };
+  state: AppState = { value: '', suggestions: [], top: [] };
 
-  sub$?: Subscription;
+  // subscribtions to unsubscribe all in one line and avoid memory leaks and make tests happy
+  subs: Subscription[] = [];
 
   readonly redirectUrl = 'https://www.bing.com/search';
 
-  renderSuggestions() {
-    return this.state.suggestions.map((v, i) => <div key={i}>{v}</div>);
+  renderSites() {
+    return this.state.top.map((v, i) => <div key={i}>{v.title}</div>);
   }
 
   async componentDidMount() {
-    this.sub$ = this.props.suggestionsService.data$.subscribe(listSuggestions => this.setState({ suggestions: listSuggestions }));
+
+    this.subs.push(
+      this.props.suggestionsService.data$.subscribe(suggestions => this.setState({ suggestions })),
+      this.props.topService.data$.subscribe(top => this.setState({ top })),
+    );
   }
   async componentWillUnmount() {
-    if (this.sub$) this.sub$.unsubscribe();
+    this.subs.forEach(s => s.unsubscribe());
   }
 
   handleSubmit = () => {
@@ -46,9 +55,12 @@ class App extends React.Component<AppProps, AppState> {
 
   render() {
     return (
-      <div className="App" >
-        <Form {...this.state} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
-      </div>
+      <>
+        <div className="App" >
+          <Form {...this.state} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
+        </div>
+        {this.renderSites()}
+      </>
     );
   }
 }
