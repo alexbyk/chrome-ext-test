@@ -51,16 +51,14 @@ class App extends React.Component<AppProps, AppState> {
   render() {
     const { top, value, suggestions } = this.state;
     return (
-      <>
-        <div className="App" >
-          <div className="Suggestions" >
-            <Form value={value} suggestions={suggestions} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
-          </div>
-          <div className="Top" >
-            <TopList items={top}></TopList>
-          </div>
+      <div className="App" >
+        <div className="Suggestions" >
+          <Form value={value} suggestions={suggestions} onSubmit={this.handleSubmit} onChange={this.handleChange}></Form>
         </div>
-      </>
+        <div className="Top" >
+          <TopList items={top}></TopList>
+        </div>
+      </div>
     );
   }
 }

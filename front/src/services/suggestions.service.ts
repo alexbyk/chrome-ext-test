@@ -1,5 +1,5 @@
 import { Suggestions } from "./suggestions.interface";
-import { Subject, Observable, of, throwError } from 'rxjs';
+import { Subject, Observable, of, throwError, empty } from 'rxjs';
 import { switchMap, catchError, map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromFetch } from 'rxjs/fetch';
 
@@ -10,12 +10,17 @@ export class SuggestionsService implements Suggestions {
   private input$ = new Subject<string>();
 
   fetch(key: string): Observable<{ list: [string] }> {
-    const url = new URL(this.url);
-    url.searchParams.append('q', key);
-    return fromFetch(`${url}`).pipe(
-      switchMap(resp => {
-        if (resp.ok) return resp.json();
-        return throwError(`Error: ${resp.status}`);
+    return of(key).pipe(
+      map(key => {
+        const url = new URL(this.url);
+        url.searchParams.append('q', key);
+        return url.toString();
+      }),
+      switchMap(url => fromFetch(url)),
+      switchMap(resp => resp.ok ? resp.json() : throwError(`Error: ${resp.status}`)),
+      catchError(e => { // catch error to continue if the server is up
+        console.error(`Fetch error: ${e}`);
+        return empty();
       }),
     );
   }
@@ -25,10 +30,10 @@ export class SuggestionsService implements Suggestions {
     distinctUntilChanged(), // don't repeat
     switchMap(key => this.fetch(key)),
     map((data: { list: string[] }) => data['list']),
-    catchError(err => {
-      console.error(err);
-      return of([])
-    })
+    catchError(e => {
+      console.error(`Error: ${e}`);
+      return empty();
+    }),
   );
 
   next(key: string) {
